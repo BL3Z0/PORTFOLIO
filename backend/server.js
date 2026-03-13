@@ -21,6 +21,20 @@ const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || "change_me";
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "*";
 
+// Paths
+const DATA_DIR = path.join(__dirname, "data");
+const UPLOADS_DIR = path.join(__dirname, "uploads");
+const PROJECTS_FILE = path.join(DATA_DIR, "projects.json");
+const CONTENT_FILE = path.join(DATA_DIR, "content.json");
+const FRONTEND_DIST = path.join(__dirname, "../frontend/dist");
+const FRONTEND_INDEX = path.join(FRONTEND_DIST, "index.html");
+
+// Ensure folders/files exist
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+if (!fs.existsSync(PROJECTS_FILE)) fs.writeFileSync(PROJECTS_FILE, "[]", "utf8");
+if (!fs.existsSync(CONTENT_FILE)) fs.writeFileSync(CONTENT_FILE, "{}", "utf8");
+
 // CORS
 app.use(
   cors({
@@ -28,18 +42,6 @@ app.use(
     credentials: true,
   })
 );
-
-// Storage paths
-const DATA_DIR = path.join(__dirname, "data");
-const UPLOADS_DIR = path.join(__dirname, "uploads");
-const PROJECTS_FILE = path.join(DATA_DIR, "projects.json");
-const CONTENT_FILE = path.join(DATA_DIR, "content.json");
-
-// Ensure folders/files exist
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-if (!fs.existsSync(PROJECTS_FILE)) fs.writeFileSync(PROJECTS_FILE, "[]", "utf8");
-if (!fs.existsSync(CONTENT_FILE)) fs.writeFileSync(CONTENT_FILE, "{}", "utf8");
 
 // Serve uploads publicly
 app.use("/uploads", express.static(UPLOADS_DIR));
@@ -223,6 +225,20 @@ app.put("/api/content", auth, (req, res) => {
   writeContent(updated);
   res.json(updated);
 });
+
+// Serve built frontend static files
+if (fs.existsSync(FRONTEND_DIST)) {
+  app.use(express.static(FRONTEND_DIST));
+
+  // Serve index.html for all non-API routes
+  app.get(/^(?!\/api|\/uploads).*/, (req, res) => {
+    res.sendFile(FRONTEND_INDEX);
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.status(200).send("Backend is running, but frontend build was not found.");
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
