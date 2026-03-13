@@ -1,0 +1,40 @@
+[
+  {
+    "id": "a049a7b9-84f2-4a90-8ae8-cdd886057987",
+    "title": "RFID Lecturers Dashboard",
+    "role": "Web Application",
+    "stack": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Node.js",
+      "MySQL",
+      "VITE"
+    ],
+    "year": "08-2025",
+    "link": "https://",
+    "blurb": "RFID-enabled lecturer portal designed to scan student RFID tags and instantly retrieve student profiles, log class attendance, and support academic record tracking (attendance history, exam records, and course-related data). Includes authentication (register/login) and a structured dashboard flow, with backend/database integration in progress.",
+    "video": "/uploads/1772370716885_Lecturers_Portal_-_Google_Chrome_2026-03-01_13-58-57.mp4",
+    "createdAt": "2026-03-01T13:11:58.772Z"
+  },
+  {
+    "id": "00fff9b8-ff05-4102-8182-c5b59ac32e26",
+    "title": "AI-Buddy",
+    "role": "Web Based",
+    "stack": [
+      "Python",
+      "Flask",
+      "Pygame",
+      "TensorFlow",
+      "Keras",
+      "HTML",
+      "CSS"
+    ],
+    "year": "05-2025",
+    "link": "https://ai-buddy-2.onrender.com/",
+    "blurb": "Interactive AI learning platform for elementary students, combining gamified education, quizzes, and machine learning demonstrations. Built with Flask (Python) backend and TensorFlow/Keras integration, featuring a child-focused, accessible UI.",
+    "video": "/uploads/1772368095077_AI_Space_Academy_-_Google_Chrome_2026-03-01_12-38-52.mp4",
+    "createdAt": "2026-03-01T12:28:19.304Z"
+  }
+]
